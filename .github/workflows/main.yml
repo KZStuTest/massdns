@@ -17,4 +17,4 @@ jobs:
               git config --global user.name "Actions"
               git add --all 
               git commit -m "compiled"
-              git push origin main 
+              git push origin master 
