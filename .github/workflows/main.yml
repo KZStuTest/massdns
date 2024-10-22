@@ -12,7 +12,7 @@ jobs:
         run: |
               make
               sudo make install
-              mv /usr/bin/massdns .
+              mv /usr/local/bin/massdns .
               git config --global user.email "some-secret@secret.com"
               git config --global user.name "Actions"
               git add --all 
