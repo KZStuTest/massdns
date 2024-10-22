@@ -1,25 +1,20 @@
-name: main
-
-on: [push, pull_request]
-
+name: compile
+on:
+  workflow_dispatch:
+#  schedule:
+#      - cron: '55 */5 * * *'
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, ubuntu-latest]
-
+  runner1:
+    runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Install system dependencies (Linux)
-      if: runner.os == 'Linux'
-      run: sudo apt-get install libpcap-dev
-
-    - name: Run CMake
-      run: cmake -S . -B build -D CMAKE_BUILD_TYPE=Debug
-
-    - name: build
-      run: cmake --build build
+      - uses: actions/checkout@v4
+      - name: download-and-run
+        run: |
+              make
+              sudo make install
+              mv /usr/bin/massdns .
+              git config --global user.email "some-secret@secret.com"
+              git config --global user.name "Actions"
+              git add --all 
+              git commit -m "compiled"
+              git push origin main 
